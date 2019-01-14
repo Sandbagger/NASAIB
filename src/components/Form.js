@@ -3,20 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-class Form extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {input:''};
-    }
-
-    handleInput = e => this.setState({input: e.target.value});
-    handleClick = () => {
-        if (this.state.input.length > 0) {
-                this.setState({input:''})
-        }
-    }
-
-    render() {
+function Form (props) {
         return (
             <Grid container 
                 justify = "center"
@@ -32,9 +19,10 @@ class Form extends Component {
                              if(e.key === 'Enter') {
                                  console.log(this.state)}}
                              }
-                         helperText={this.state.input.length + "/40"}
-                         value ={this.state.input}
-                        onChange={this.handleInput}/>
+                         helperText={props.input.length + "/40"}
+                         value ={props.input}
+                         onChange={(e) => props.onInput(e)}
+                        />
                 </Grid>
                 <Grid item>
                     <Button
@@ -47,7 +35,7 @@ class Form extends Component {
             </Grid>
         )
     }
-}
+
 
 
 export default Form;

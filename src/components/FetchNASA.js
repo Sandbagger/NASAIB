@@ -17,14 +17,17 @@ class FetchNASA extends Component {
     constructor(props){
         super(props);
         this.state = {
-            todo: []
+            input: ""
         }
+        this.handleInput = this.handleInput.bind(this);
     }
 
-    componentWillMount(){
-       
-    };
 
+    handleInput(e) {
+        console.log(e.target.value)
+        this.setState({input: e.target.value});
+        
+    }
 
     render(){
         return (
@@ -37,7 +40,8 @@ class FetchNASA extends Component {
                   spacing = {16}>
              
                     <Grid item>
-                        <Form/>
+                        <Form onInput={this.handleInput}
+                            input={this.state.input} />
                     </Grid>
                 </Grid>
             </Paper>
