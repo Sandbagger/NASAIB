@@ -24,6 +24,10 @@ class FetchNASA extends Component {
         this.handleInput = this.handleInput.bind(this);
     }
 
+    componentDidMount(){
+        this.fetchImages()
+    }
+    
     componentDidUpdate(prevProps, prevState){
         if (prevState.input !== this.state.input){
             this.fetchImages()
@@ -40,10 +44,11 @@ class FetchNASA extends Component {
     }
 
     async fetchImages(){
-       let url = 'https://images-api.nasa.gov/search?q=' + this.state.input + '&media_type=image'
+        let input = this.state.input || 'launch'
+       let url = 'https://images-api.nasa.gov/search?q=' + input + '&media_type=image'
         let res = await fetch(url)
         let data = await res.json();
-        let arr = data.collection.items.slice(0,11)
+        let arr = data.collection.items.slice(0,21)
         let update = arr.map(item => {
            return  {
                         urls: item.links[0].href,
@@ -57,9 +62,7 @@ class FetchNASA extends Component {
 
     render(){
         return (
-            <Paper
-              style={style}
-              elevation={12}>
+            
                 <Grid container 
                   justify = "center"
                   direction = "column"
@@ -74,7 +77,7 @@ class FetchNASA extends Component {
                     </Grid>
 
                 </Grid>
-            </Paper>
+            
         )
     }
 }

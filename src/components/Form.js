@@ -24,14 +24,7 @@ function Form (props) {
                          onChange={(e) => props.onInput(e)}
                         />
                 </Grid>
-                <Grid item>
-                    <Button
-                        variant="fab"
-                        mini
-                        color="primary"
-                        onClick={() => this.handleClick()}
-                    >Add</Button>
-                </Grid>
+               
             </Grid>
         )
     }
