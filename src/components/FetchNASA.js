@@ -17,16 +17,36 @@ class FetchNASA extends Component {
     constructor(props){
         super(props);
         this.state = {
-            input: ""
+            input: "",
+            urls: []
         }
         this.handleInput = this.handleInput.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState){
+        if (prevState.input !== this.state.input){
+            this.fetchImages()
+        }
+        if (prevState.urls !== this.state.urls){
+            console.log(this.state.urls)
+        }
+    }
 
     handleInput(e) {
         console.log(e.target.value)
         this.setState({input: e.target.value});
         
+    }
+
+    async fetchImages(){
+       let url = 'https://images-api.nasa.gov/search?q=' + this.state.input + '&media_type=image'
+        let res = await fetch(url)
+        let data = await res.json();
+        this.setState({urls:{
+            urls: data.collection.items[0].href,
+            title: data.collection.items[0].data[0].title,
+            description: data.collection.items[0].data[0].description
+        }})
     }
 
     render(){
