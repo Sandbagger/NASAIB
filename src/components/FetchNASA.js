@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Form from './Form.js';
+import ImageGrid from './ImageGrid'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
@@ -42,11 +43,16 @@ class FetchNASA extends Component {
        let url = 'https://images-api.nasa.gov/search?q=' + this.state.input + '&media_type=image'
         let res = await fetch(url)
         let data = await res.json();
-        this.setState({urls:{
-            urls: data.collection.items[0].href,
-            title: data.collection.items[0].data[0].title,
-            description: data.collection.items[0].data[0].description
-        }})
+        let arr = data.collection.items.slice(0,11)
+        let update = arr.map(item => {
+           return  {
+                        urls: item.links[0].href,
+                        title: item.data[0].title,
+                        description: item.data[0].description
+                }
+            })
+       
+        this.setState({urls:update})
     }
 
     render(){
@@ -63,6 +69,10 @@ class FetchNASA extends Component {
                         <Form onInput={this.handleInput}
                             input={this.state.input} />
                     </Grid>
+                    <Grid item>
+                    <ImageGrid tileData={this.state.urls}/>
+                    </Grid>
+
                 </Grid>
             </Paper>
         )
