@@ -2,6 +2,29 @@ import React from 'react';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { withStyles } from '@material-ui/core/styles';
+import SimpleModal from './SimpleModal';
+
+const styles = theme => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      overflow: 'hidden',
+      backgroundColor: theme.palette.background.paper,
+    },
+    gridList: {
+      width: 500,
+      height: 450,
+    },
+    icon: {
+      color: 'rgba(255, 255, 255, 0.54)',
+    },
+  });
 
 function ImageGrid(props) {
     const getGridListCols = () => {
@@ -19,17 +42,38 @@ function ImageGrid(props) {
     
         return 1;
       }
+
+      const { classes } = props;
     return (
       <div>
         <GridList cellHeight={160} cols={getGridListCols()}>
           {props.tileData.map(tile => (
-            <GridListTile key={tile.urls} cols="1">
+          
+            <GridListTile key={tile.urls} cols={1}>
               <img src={tile.urls} alt={tile.title} />
+              <GridListTileBar
+              title={tile.title}
+              actionIcon={
+                <IconButton className={classes.icon}
+                onClick={props.open}>
+                  <InfoIcon/>
+                </IconButton>
+              }
+            />
+            <SimpleModal isOpen={props.isOpen}
+             close={props.handleClose}
+             title={tile.title}
+             description={tile.description}
+             url={tile.urls}
+             />
             </GridListTile>
+             
+              
           ))}
+          
         </GridList>
       </div>
     );
   }
 
-  export default withWidth()(ImageGrid);
+  export default withStyles(styles)(withWidth()(ImageGrid));

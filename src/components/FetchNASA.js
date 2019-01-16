@@ -19,7 +19,8 @@ class FetchNASA extends Component {
         super(props);
         this.state = {
             input: "",
-            urls: []
+            urls: [],
+            open: false
         }
         this.handleInput = this.handleInput.bind(this);
     }
@@ -34,6 +35,9 @@ class FetchNASA extends Component {
         }
         if (prevState.urls !== this.state.urls){
             console.log(this.state.urls)
+        }
+        if (prevState.open !== this.state.open){
+            console.log("open changed")
         }
     }
 
@@ -53,12 +57,22 @@ class FetchNASA extends Component {
            return  {
                         urls: item.links[0].href,
                         title: item.data[0].title,
-                        description: item.data[0].description
+                        description: item.data[0].description,
+                        nasaid: item.data[0].nasa_id
                 }
             })
        
         this.setState({urls:update})
     }
+
+    handleOpen = () => {
+        this.setState({ open: true });
+      };
+    
+      handleClose = () => {
+        this.setState({ open: false });
+      };
+    
 
     render(){
         return (
@@ -73,7 +87,13 @@ class FetchNASA extends Component {
                             input={this.state.input} />
                     </Grid>
                     <Grid item>
-                    <ImageGrid tileData={this.state.urls}/>
+                     
+                    <ImageGrid tileData={this.state.urls}
+                        open={this.handleOpen}
+                        isOpen={this.state.open}
+                            close={this.handleClose}
+                        />
+                     
                     </Grid>
 
                 </Grid>
