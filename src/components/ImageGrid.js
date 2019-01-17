@@ -8,6 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { withStyles } from '@material-ui/core/styles';
 import SimpleModal from './SimpleModal';
+import {Link} from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -46,7 +47,7 @@ function ImageGrid(props) {
       const { classes } = props;
     return (
       <div>
-        <GridList cellHeight={160} cols={getGridListCols()}>
+        <GridList cellHeight={100} cols={getGridListCols()} spacing={12}>
           {props.tileData.map(tile => (
           
             <GridListTile key={tile.urls} cols={1}>
@@ -54,14 +55,15 @@ function ImageGrid(props) {
               <GridListTileBar
               title={tile.title}
               actionIcon={
-                <IconButton className={classes.icon}
+                <Link to="/asset/asset/:nasaid"><IconButton className={classes.icon}
                 onClick={props.open}>
                   <InfoIcon/>
                 </IconButton>
+                </Link>
               }
             />
             <SimpleModal isOpen={props.isOpen}
-             close={props.handleClose}
+             close={props.close}
              title={tile.title}
              description={tile.description}
              url={tile.urls}

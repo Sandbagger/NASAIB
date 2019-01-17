@@ -3,7 +3,12 @@ import Form from './Form.js';
 import ImageGrid from './ImageGrid'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
+import { 
+    BrowserRouter as Router, 
+    Switch,
+    Route,
+    Redirect } from 'react-router-dom';
+import Asset from './Asset';
 
 const style = {
     minHeight: "500px",
@@ -23,6 +28,7 @@ class FetchNASA extends Component {
             open: false
         }
         this.handleInput = this.handleInput.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     componentDidMount(){
@@ -70,34 +76,38 @@ class FetchNASA extends Component {
       };
     
       handleClose = () => {
+          debugger
         this.setState({ open: false });
       };
     
 
     render(){
         return (
-            
+            <Router>
                 <Grid container 
                   justify = "center"
                   direction = "column"
                   spacing = {16}>
              
+                 <Redirect from="/" exact to="/search"/>
                     <Grid item>
                         <Form onInput={this.handleInput}
                             input={this.state.input} />
                     </Grid>
                     <Grid item>
-                     
-                    <ImageGrid tileData={this.state.urls}
+                     <Switch>
+                          <Route path="/search" render={()=>(<ImageGrid tileData={this.state.urls}
                         open={this.handleOpen}
                         isOpen={this.state.open}
                             close={this.handleClose}
-                        />
-                     
+                          />)}/>
+                         <Route path="/asset" component={Asset}/>
+                     </Switch>
+                    
                     </Grid>
-
+                    
                 </Grid>
-            
+                </Router>
         )
     }
 }
