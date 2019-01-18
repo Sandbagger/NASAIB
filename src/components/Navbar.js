@@ -18,7 +18,7 @@ const NavBar = () => {
                         </Typography>
                         </Grid>
                         <Grid item>
-                            <Button color="inherit" varient="contained" href="#"> 
+                            <Button color="inherit" varient="contained" href=""> 
                                 Github
                             </Button>
                         </Grid>

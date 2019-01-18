@@ -55,7 +55,7 @@ function ImageGrid(props) {
               <GridListTileBar
               title={tile.title}
               actionIcon={
-                <Link to="/asset/asset/:nasaid"><IconButton className={classes.icon}
+                <Link to="/asset/:nasaid"><IconButton className={classes.icon}
                 onClick={props.open}>
                   <InfoIcon/>
                 </IconButton>
