@@ -83,19 +83,15 @@ class App extends Component {
   render(){
       return (
          <div>
-              <Navbar/>
+              <Navbar
+               onInput={this.handleInput}
+               input={this.state.input}/>
               <Grid container 
                 justify = "center"
                 direction = "column"
                 spacing = {16}>
            
-           
                   <Grid item>
-                      <Form onInput={this.handleInput}
-                          input={this.state.input} />
-                  </Grid>
-                  <Grid item>
-                 
                        <ImageGrid tileData={this.state.urls}
                       open={this.handleOpen}
                       isOpen={this.state.open}
