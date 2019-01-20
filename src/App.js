@@ -86,17 +86,13 @@ class App extends Component {
               <Navbar
                onInput={this.handleInput}
                input={this.state.input}/>
-              <Grid container 
-                justify = "center"
-                direction = "column"
-                spacing = {16}>
-           
-                  <Grid item>
+            
+                      <Route render = {props => (
                        <ImageGrid tileData={this.state.urls}
-                      open={this.handleOpen}
-                      isOpen={this.state.open}
+                       open={this.handleOpen}
+                       isOpen={this.state.open}
                           close={this.handleClose}
-                        />)
+                        />)}/>
 
                        {!this.state.urls.length && <Route path="/asset/:nasaid" 
                       render={props => (
@@ -105,9 +101,7 @@ class App extends Component {
                          close={this.handleClose}
                          data={this.state.urls} />)}
                         />}
-                  </Grid>
-                  
-              </Grid>
+                
               </div>
       )
   }

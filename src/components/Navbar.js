@@ -2,15 +2,9 @@ import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Form from './Form.js';
-import PropTypes from 'prop-types';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 
@@ -80,11 +74,8 @@ const NavBar = (props) => {
         <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-            <MenuIcon />
-          </IconButton>
           <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            Material-UI
+            NASA Image Browser
           </Typography>
           <div className={classes.grow} />
           <div className={classes.search}>
