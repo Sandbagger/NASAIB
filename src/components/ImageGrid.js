@@ -8,7 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { withStyles } from '@material-ui/core/styles';
 import SimpleModal from './SimpleModal';
-import {Link, Route} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -45,30 +45,35 @@ function ImageGrid(props) {
       }
 
       const { classes } = props;
-      
     return (
       <div>
         <GridList cellHeight={100} cols={getGridListCols()} spacing={12}>
-        {Object.entries(props.tileData).map(tile => (
-          
-          <GridListTile key={tile[0]} cols={1}>
-            <img src={tile[1].url} alt={tile[1].title} />
-            <GridListTileBar
-            title={tile[1].title}
-            actionIcon={
-              <Link to={`/asset/${tile[0]}`}><IconButton className={classes.icon}
-              onClick={props.open}>
-                <InfoIcon/>
-              </IconButton>
-              </Link> }
-            />
-            
-            </GridListTile>
-             
+          {props.tileData.map(tile => {
+            return (
+              <GridListTile key={tile.urls} cols={1}>
+                <img src={tile.urls} alt={tile.title} />
+                <GridListTileBar
+                title={tile.title}
+                actionIcon={
+                  <Link to={`/asset?id=${':' + tile.nasaid}`}><IconButton className={classes.icon}
+                  onClick={props.open}>
+                    <InfoIcon/>
+                  </IconButton>
+                  </Link>
+                }
+              />
+              <SimpleModal
+                isOpen={props.isOpen}
+                close={props.close}
+                title={tile.title}
+                description={tile.description}
+                url={tile.urls}
+              />
+              </GridListTile>
                
                 
             )
-          
+          }
           )}
           
         </GridList>

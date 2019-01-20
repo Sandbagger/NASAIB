@@ -57,16 +57,18 @@ class App extends Component {
      let url = 'https://images-api.nasa.gov/search?q=' + input + '&media_type=image'
       let res = await fetch(url)
       let data = await res.json();
-      let arr = data.collection.items.slice(0,21)
-      var update = {};
-      arr.map(item => update[item.data[0].nasa_id] =  {
-                      url: item.links[0].href,
+      let arr = data.collection.items.slice(0,5)
+
+      let update = arr.map(item => {
+         return  {
+                      urls: item.links[0].href,
                       title: item.data[0].title,
-                      description: item.data[0].description
+                      description: item.data[0].description,
+                      nasaid: item.data[0].nasa_id
+              }
           })
      
       this.setState({urls:update})
-      console.log(update)
   }
 
   handleOpen = () => {
@@ -92,16 +94,11 @@ class App extends Component {
                        open={this.handleOpen}
                        isOpen={this.state.open}
                           close={this.handleClose}
-                        />)}/>
+                        />
 
-                       {!this.state.urls.length && <Route path="/asset/:nasaid" 
-                      render={props => (
-                        <SimpleModal
-                         isOpen={this.state.open}
-                         close={this.handleClose}
-                         data={this.state.urls} />)}
-                        />}
-                
+                  </Grid>
+                  
+              </Grid>
               </div>
       )
   }
