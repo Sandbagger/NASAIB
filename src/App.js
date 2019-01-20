@@ -28,7 +28,7 @@ class App extends Component {
       super(props);
       this.state = {
           input: "",
-          data: [],
+          urls: [],
           open: false
       }
       this.handleInput = this.handleInput.bind(this);
@@ -37,41 +37,38 @@ class App extends Component {
 
   componentDidMount(){
     this.props.history.push('/search');
-      this.fetchData()
+      this.fetchImages()
   }
   
   componentDidUpdate(prevProps, prevState){
       if (prevState.input !== this.state.input){
-          this.fetchData()
+          this.fetchImages()
       }
-      if (prevState.data !== this.state.data){
-          console.log(this.state.data)
-      }
-      if (prevState.open !== this.state.open){
-       
-      }
+  
   }
 
   handleInput(e) {
-      console.log(e.target.value)
       this.setState({input: e.target.value});
       
   }
 
-  async fetchData(){
-      let input = this.state.input || 'space';
+  async fetchImages(){
+      let input = this.state.input || 'launch'
      let url = 'https://images-api.nasa.gov/search?q=' + input + '&media_type=image'
       let res = await fetch(url)
       let data = await res.json();
-      let arr = data.collection.items.slice(0,21)
-      var update = {};
-      arr.map(item => update[item.data[0].nasa_id] =  {
-                      url: item.links[0].href,
+      let arr = data.collection.items.slice(0,5)
+
+      let update = arr.map(item => {
+         return  {
+                      urls: item.links[0].href,
                       title: item.data[0].title,
-                      description: item.data[0].description
-              })   
-              console.log(update)
-      this.setState({data:update})
+                      description: item.data[0].description,
+                      nasaid: item.data[0].nasa_id
+              }
+          })
+     
+      this.setState({urls:update})
   }
 
   handleOpen = () => {
@@ -79,7 +76,7 @@ class App extends Component {
     };
   
     handleClose = () => {
-     
+       
       this.setState({ open: false });
       this.props.history.push('/search')
     };
@@ -94,19 +91,19 @@ class App extends Component {
                 direction = "column"
                 spacing = {16}>
            
-                          <Grid item>
+           
+                  <Grid item>
                       <Form onInput={this.handleInput}
                           input={this.state.input} />
                   </Grid>
                   <Grid item>
                  
-                       <ImageGrid tileData={this.state.data}
+                       <ImageGrid tileData={this.state.urls}
                       open={this.handleOpen}
-                        />
-                         <SimpleModal data={this.state.data}
+                      isOpen={this.state.open}
                           close={this.handleClose}
-                          isOpen={this.state.open}/>
-                  
+                        />
+
                   </Grid>
                   
               </Grid>

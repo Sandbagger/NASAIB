@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
@@ -29,43 +28,27 @@ const styles = theme => ({
 });
 
 
-class SimpleModal extends Component {
-  constructor(props){
-    super(props);
+function SimpleModal(props){
+  const { classes } = props;
 
-}
-
-componentDidUpdate(prevProps, prevState){
-  if (prevProps !== this.props){
-    console.log(this.props.location.search,) // "?filter=top&origin=im"
-  }
- 
-   
-  }
-
-
-render(){
-  
-  
     return (<Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        open={this.props.isOpen}
-        onClose={this.props.close}
+        open={props.isOpen}
+        onClose={props.close}
       >
-        <div style={getModalStyle()}  >
+        <div style={getModalStyle()}  className={classes.paper}>
           <Typography variant="h6" id="modal-title">
-            {this.props.title}
+            {props.title}
           </Typography>
-          <img src='https://images-assets.nasa.gov/image/jsc2007e034221/jsc2007e034221~thumb.jpg' alt={this.props.title} />
+          <img src='https://images-assets.nasa.gov/image/jsc2007e034221/jsc2007e034221~thumb.jpg' alt={props.title} />
           <Typography variant="subtitle1" id="simple-modal-description">
-            Description
+            {props.description}
           </Typography>
           </div>
         </Modal>
     )
 }
-}
 
-export default withStyles(styles)(withRouter(SimpleModal));
+export default withStyles(styles)(SimpleModal);
 
