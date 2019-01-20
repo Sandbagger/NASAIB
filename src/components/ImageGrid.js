@@ -48,14 +48,14 @@ function ImageGrid(props) {
     return (
       <div>
         <GridList cellHeight={100} cols={getGridListCols()} spacing={12}>
-          {props.tileData.map(tile => (
+          {Object.entries(props.tileData).map(tile => (
           
-            <GridListTile key={tile.urls} cols={1}>
-              <img src={tile.urls} alt={tile.title} />
+            <GridListTile key={tile[0]} cols={1}>
+              <img src={tile[1].url} alt={tile[1].title} />
               <GridListTileBar
-              title={tile.title}
+              title={tile[1].title}
               actionIcon={
-                <Link to={`/asset/${tile.nasaid}`}><IconButton className={classes.icon}
+                <Link to={`/asset?id=${tile[0]}`}><IconButton className={classes.icon}
                 onClick={props.open}>
                   <InfoIcon/>
                 </IconButton>
@@ -64,9 +64,9 @@ function ImageGrid(props) {
             />
             <SimpleModal isOpen={props.isOpen}
              close={props.close}
-             title={tile.title}
+             title={tile[1].title}
              description={tile.description}
-             url={tile.urls}
+             url={tile[1].url}
              />
             </GridListTile>
              
