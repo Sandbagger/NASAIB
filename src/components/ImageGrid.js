@@ -14,63 +14,51 @@ const styles = theme => ({
     root: {
       display: 'flex',
       flexWrap: 'wrap',
-      justifyContent: 'space-around',
+      justifyContent: 'space-between',
       overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
     },
     gridList: {
       width: 500,
       height: 450,
+      
     },
-    icon: {
-      color: 'rgba(255, 255, 255, 0.54)',
-    },
+    margin: {
+      width: '80%'
+    }
   });
 
 function ImageGrid(props) {
     const getGridListCols = () => {
         if (isWidthUp('xl', props.width)) {
-          return 4;
+          return 5;
         }
     
         if (isWidthUp('lg', props.width)) {
-          return 3;
+          return 4;
         }
     
         if (isWidthUp('md', props.width)) {
-          return 2;
+          return 3;
         }
     
-        return 1;
+        return 2;
       }
 
       const { classes } = props;
       
     return (
-      <div>
-        <GridList cellHeight={100} cols={getGridListCols()} spacing={12}>
-        {Object.entries(props.tileData).map(tile => (
-          
-          <GridListTile key={tile[0]} cols={1}>
-            <img src={tile[1].url} alt={tile[1].title} />
-            <GridListTileBar
-            title={tile[1].title}
-            actionIcon={
-              <Link to={`/asset/${tile[0]}`}><IconButton className={classes.icon}
-              onClick={props.open}>
-                <InfoIcon/>
-              </IconButton>
-              </Link> }
-            />
-            
+      <div >
+        <GridList  cellHeight={300} cols={getGridListCols()} spacing={30} className={classes.root}>
+         {Object.entries(props.tileData).map(tile => (
+          <GridListTile key={tile[0]} cols={1} onClick={props.open}>
+            <Link to={`/asset?id=${tile[0]}`}>
+              <img src={tile[1].url} alt={tile[1].title} />
+              <GridListTileBar title={tile[1].title} />
+            </Link>
             </GridListTile>
-             
-               
-                
             )
-          
           )}
-          
         </GridList>
       </div>
     );
